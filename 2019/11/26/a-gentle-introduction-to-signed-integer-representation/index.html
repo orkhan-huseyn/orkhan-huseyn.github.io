@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="IntroductionWhen we talk about numbers and data types in programming we generally mention how many bytes they occupy in memory. For example, we say that 32 bit integer can hold values from 0 up to 2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="A Gentle Introduction to Signed Integer Representation">
+<meta property="og:url" content="http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/index.html">
+<meta property="og:site_name" content="Orkhan Huseynli">
+<meta property="og:description" content="IntroductionWhen we talk about numbers and data types in programming we generally mention how many bytes they occupy in memory. For example, we say that 32 bit integer can hold values from 0 up to 2">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/cover.png">
+<meta property="article:published_time" content="2019-11-26T18:15:59.000Z">
+<meta property="article:modified_time" content="2022-11-05T19:05:41.311Z">
+<meta property="article:author" content="Orkhan Huseynli">
+<meta property="article:tag" content="orkhan huseyn, orkhan huseynli, javascript developer, front-end engineer, software developer, software engineer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/cover.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>A Gentle Introduction to Signed Integer Representation</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/11/30/advanced-git-concepts/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/11/02/dijkstras-two-stack-algorithm/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&text=A Gentle Introduction to Signed Integer Representation"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&title=A Gentle Introduction to Signed Integer Representation"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&is_video=false&description=A Gentle Introduction to Signed Integer Representation"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Gentle Introduction to Signed Integer Representation&body=Check out this article: http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&title=A Gentle Introduction to Signed Integer Representation"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&title=A Gentle Introduction to Signed Integer Representation"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&title=A Gentle Introduction to Signed Integer Representation"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&title=A Gentle Introduction to Signed Integer Representation"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&name=A Gentle Introduction to Signed Integer Representation&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unsigned-integers-in-binary"><span class="toc-number">2.</span> <span class="toc-text">Unsigned integers in binary</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Complement-tehcnique"><span class="toc-number">3.</span> <span class="toc-text">Complement tehcnique</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Subtracting-using-complement"><span class="toc-number">4.</span> <span class="toc-text">Subtracting using complement</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">5.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        A Gentle Introduction to Signed Integer Representation
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Orkhan Huseynli</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-11-26T18:15:59.000Z" itemprop="datePublished">2019-11-26</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <img src="/2019/11/26/a-gentle-introduction-to-signed-integer-representation/cover.png" class="" title="signed-integer-representation">
+
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>When we talk about numbers and data types in programming we generally mention how many bytes they occupy in memory. For example, we say that 32 bit integer can hold values from 0 up to 2<sup>32</sup>-1, 64 bit can hold up to 2<sup>64</sup> - 1 and etc. However, this examples are true when the integer is unsigned, which means that it consists of only positive numbers. In signed integers, the ones that hold both negative and positive values, the minimum and maximum values are different: 32 bit signed integers can hold values from -2<sup>31</sup> up to 2<sup>31</sup>-1. Why? To understand it deeply, let see it visually.</p>
+<h2 id="Unsigned-integers-in-binary"><a href="#Unsigned-integers-in-binary" class="headerlink" title="Unsigned integers in binary"></a>Unsigned integers in binary</h2><p>Let’s say we have a 4 bit unsigned integer. Its mimimum value is 0 when the maximum value is 15. Let’s write them all down:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0000 -- 0 in decimal, this is the minimum</span><br><span class="line">0001 -- 1 in decimal</span><br><span class="line">0010 -- 2 in decimal</span><br><span class="line">0011 -- 3 in decimal</span><br><span class="line">0100 -- 4 in decimal</span><br><span class="line">0101 -- 5 in decimal</span><br><span class="line">0110 -- 6 in decimal</span><br><span class="line">0111 -- 7 in decimal</span><br><span class="line">1000 -- 8 in decimal</span><br><span class="line">1001 -- 9 in decimal</span><br><span class="line">1010 -- 10 in decimal</span><br><span class="line">1011 -- 11 in decimal</span><br><span class="line">1100 -- 12 in decimal</span><br><span class="line">1101 -- 13 in decimal</span><br><span class="line">1110 -- 14 in decimal</span><br><span class="line">1111 -- 15 in decimal, this is the maximum</span><br></pre></td></tr></table></figure>
+
+<p>This is pretty clear and an usual way of how we think of binary representation of integers. What about negative numbers? If 4 bit integer was signed then its minimum value would be -8 (-2<sup>3</sup>) when the maximum value would be 7(2<sup>3</sup>-1). Again why? Let’s write them down:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">0000 -- 0 in decimal</span><br><span class="line">0001 -- 1 in decimal</span><br><span class="line">0010 -- 2 in decimal</span><br><span class="line">0011 -- 3 in decimal</span><br><span class="line">0100 -- 4 in decimal</span><br><span class="line">0101 -- 5 in decimal</span><br><span class="line">0110 -- 6 in decimal</span><br><span class="line">0111 -- 7 in decimal, this is the maximum</span><br><span class="line">1000 -- (-8) in decimal, this is the mimimum</span><br><span class="line">1001 -- (-7) in decimal</span><br><span class="line">1010 -- (-6) in decimal</span><br><span class="line">1011 -- (-5) in decimal</span><br><span class="line">1100 -- (-4) in decimal</span><br><span class="line">1101 -- (-3) in decimal</span><br><span class="line">1110 -- (-2) in decimal</span><br><span class="line">1111 -- (-1) in decimal</span><br></pre></td></tr></table></figure>
+
+<p>Now, this looks quite confusing, right? One question you may ask is: <em>Why is 1111 is -1 and 1000 is -8?</em>. Now, if you add -7 and 7 or -1 and 1 or -5 and 5 in binary, you will see that you get 0 in binary (in 4 bytes, ignore the carry). Why this works? Is it a magic? To understand it clearly we need to understand complements technique. The reason, why negative 1 is 1111, because 1111 is 2’s complement of positive one (0001). So, what is complement technique?</p>
+<h2 id="Complement-tehcnique"><a href="#Complement-tehcnique" class="headerlink" title="Complement tehcnique"></a>Complement tehcnique</h2><p>Let’s first begin with the decimal world. If we want to find 9’s complement of any decimal number, we subtract it from all 9’s. For example, if we want to find 9’s complement of 58, we subtract 58 from 99:</p>
+<p><code>99 - 58 = 41 --&gt; is 9&#39;s complement of 58</code></p>
+<p>If we add 1 to 41, we will get 42 and that will be 10’s complement. So, adding 1 to the 9’s complement gave us 10’s complement. This is simply, subtracting 58 from 10.</p>
+<p><code>99 - 58 + 1 = 42 --&gt; is 10&#39;s complement of 58</code></p>
+<p>Similarly, if we want to find 2’s complement of any binary number, we subtract it from all 1’s to find 1’s complement and add 1 to it to get 2’s complement. So, 1’s complement of 1001 is: <code>1111 - 1001 = 0110</code> and adding 1 to it will give us 2’ complement: <code>0110 + 0001 = 0111</code>. But, how computers subtract a number from the other?</p>
+<p>If you were careful, you would notice that to find 1’s complement of binary number we don’t need to practically subtract the number from 1111. Just flipping the bits would give us the right answer, so instead of subtracting, we could apply logical NOT operator to the number: <code>NOT 1001 = 0110 --&gt; 1&#39;s complement of 1001</code></p>
+<h2 id="Subtracting-using-complement"><a href="#Subtracting-using-complement" class="headerlink" title="Subtracting using complement"></a>Subtracting using complement</h2><p>Since there is no subtraction operation in computers, we also need to subtract numbers using addition. Luckily, complement technique also helps here.</p>
+<p>Again in the decimal world! Let’s say we want to subtract 58 from 87. 10’s complement of 58 is 42, and if you add 87 and 42 together it will give you 129. Remove, 1 from 129 (because we are only working with 2 digits and ignoring the overflows) and you will get 29. Guess what? 87 - 58 is 29.</p>
+<p>Similarly, in binary world, if you want to subtract a number from another, find 2’s complement of the small number and add it with the other. For example, to calculate <code>1100 1011 - 1001 1100</code>, (203 - 156 in unsigned representation) find 2’s complement of <code>1001 1100</code> which is <code>NOT 1001 1100 + 0000 0001 = 0110 0011 + 0000 0001 = 0110 0100</code> and then adding it with the first number will give us <code>1100 1011 + 0110 0100 = 010010 1111</code>. Since we ignore overflows, we will ignore first two digits of the result and our result will be <code>0010 1111</code> which is 47 in decimal (203 - 156 = 47).</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Now, hopefully it makes sense why the negative numbers were depicted in the way they are. And as you already understood from the examples above any signed integers minimum value will be -2<sup>n-1</sup> and maximum value will be 2<sup>n-1</sup>-1. If anyone asks you what is, let’s say negative 8 in binary, just find what is positive 8 in binary, then two’s complement of that number will be negative 8.</p>
+<p>The contents of this article is heavily based on <a target="_blank" rel="noopener" href="https://www.udemy.com/course/number-system/">Number Theory for Programmers</a> course on Udemy, so I highly recommend you to enroll and learn more.</p>
+<p>Thanks for reading.</p>
+<p>If you find any mistakes on article, please let me know.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Unsigned-integers-in-binary"><span class="toc-number">2.</span> <span class="toc-text">Unsigned integers in binary</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Complement-tehcnique"><span class="toc-number">3.</span> <span class="toc-text">Complement tehcnique</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Subtracting-using-complement"><span class="toc-number">4.</span> <span class="toc-text">Subtracting using complement</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">5.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&text=A Gentle Introduction to Signed Integer Representation"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&title=A Gentle Introduction to Signed Integer Representation"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&is_video=false&description=A Gentle Introduction to Signed Integer Representation"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=A Gentle Introduction to Signed Integer Representation&body=Check out this article: http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&title=A Gentle Introduction to Signed Integer Representation"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&title=A Gentle Introduction to Signed Integer Representation"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&title=A Gentle Introduction to Signed Integer Representation"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&title=A Gentle Introduction to Signed Integer Representation"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://orkhan-huseyn.github.io/2019/11/26/a-gentle-introduction-to-signed-integer-representation/&name=A Gentle Introduction to Signed Integer Representation&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2022 Orkhan Huseynli
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-151379834-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+</body>
+</html>

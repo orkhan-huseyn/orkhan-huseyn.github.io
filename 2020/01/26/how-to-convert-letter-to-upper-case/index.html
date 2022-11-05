@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="Let’s talk about a very simple string utility function that we use a lot. If somebody asks you to convert all letters in a string to upper case, what do you do? Yes, you use a built-in function that e">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to Convert a Letter to Upper Case">
+<meta property="og:url" content="http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/index.html">
+<meta property="og:site_name" content="Orkhan Huseynli">
+<meta property="og:description" content="Let’s talk about a very simple string utility function that we use a lot. If somebody asks you to convert all letters in a string to upper case, what do you do? Yes, you use a built-in function that e">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/ascii-table.png">
+<meta property="article:published_time" content="2020-01-26T15:31:13.000Z">
+<meta property="article:modified_time" content="2022-11-05T19:05:41.335Z">
+<meta property="article:author" content="Orkhan Huseynli">
+<meta property="article:tag" content="orkhan huseyn, orkhan huseynli, javascript developer, front-end engineer, software developer, software engineer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/ascii-table.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>How to Convert a Letter to Upper Case</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2020/03/26/javas-try-with-resources/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/12/07/ieee754-single-and-double-precision-formats-explained/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&text=How to Convert a Letter to Upper Case"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&title=How to Convert a Letter to Upper Case"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&is_video=false&description=How to Convert a Letter to Upper Case"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How to Convert a Letter to Upper Case&body=Check out this article: http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&title=How to Convert a Letter to Upper Case"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&title=How to Convert a Letter to Upper Case"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&title=How to Convert a Letter to Upper Case"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&title=How to Convert a Letter to Upper Case"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&name=How to Convert a Letter to Upper Case&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        How to Convert a Letter to Upper Case
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Orkhan Huseynli</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-01-26T15:31:13.000Z" itemprop="datePublished">2020-01-26</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>Let’s talk about a very simple string utility function that we use a lot. If somebody asks you to convert all letters in a string to upper case, what do you do? Yes, you use a built-in function that exists in all programming languages. For example, in JavaScript, we use <code>String.prototype.toUpperCase</code> function.</p>
+<p>But have you ever thought how would yo do it if there is not a built-in function? If no, then this article is for you. The solution to this problem is very very very easy, actually. We just never think about it.</p>
+<p>The key is ASCII table. If you don’t know what is this, it is simply a table that shows numerical representation of each character. Remember? Computers can only understand numbers. ASCII stands for American Standard Code for Information Interchange and it contains only 128 characters.</p>
+<p><img src="./ascii-table.png" alt="ascii table"></p>
+<p>Now, look at the table carefully. The lower case letters starts from 97 and ends at 122 and upper case letters starts from 65 and ends at 90. So, if you are implementing your own <code>toUpperCase</code> function then all you need to do is subtract <code>32</code> from the char code whenever you see a lower case letter.</p>
+<p>I know that, now you can write a function on yourself but here is my implementation of <code>toUpperCase</code> function in JavaScript.</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">toUpperCase</span>(<span class="params">str</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> charCodes = [];</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; str.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">let</span> charCode = str.<span class="title function_">charCodeAt</span>(i);</span><br><span class="line">    <span class="keyword">if</span> (charCode &gt;= <span class="number">97</span> &amp;&amp; charCode &lt;= <span class="number">122</span>) &#123;</span><br><span class="line">      charCode = charCode - <span class="number">32</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    charCodes.<span class="title function_">push</span>(charCode);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">String</span>.<span class="title function_">fromCharCode</span>(...charCodes);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>I hope this article was useful for you.<br>Thanks for reading!</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&text=How to Convert a Letter to Upper Case"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&title=How to Convert a Letter to Upper Case"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&is_video=false&description=How to Convert a Letter to Upper Case"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=How to Convert a Letter to Upper Case&body=Check out this article: http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&title=How to Convert a Letter to Upper Case"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&title=How to Convert a Letter to Upper Case"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&title=How to Convert a Letter to Upper Case"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&title=How to Convert a Letter to Upper Case"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://orkhan-huseyn.github.io/2020/01/26/how-to-convert-letter-to-upper-case/&name=How to Convert a Letter to Upper Case&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2022 Orkhan Huseynli
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-151379834-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+</body>
+</html>

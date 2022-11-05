@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="IntroductionChecking if a number is prime and finding prime factors of a number has plenty of applications in computer science. So you may face with these questions very often. Let’s look at what are">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Prime Numbers &amp; Factorisation">
+<meta property="og:url" content="http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/index.html">
+<meta property="og:site_name" content="Orkhan Huseynli">
+<meta property="og:description" content="IntroductionChecking if a number is prime and finding prime factors of a number has plenty of applications in computer science. So you may face with these questions very often. Let’s look at what are">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/sieve_animation.gif">
+<meta property="article:published_time" content="2022-05-11T19:09:37.000Z">
+<meta property="article:modified_time" content="2022-11-05T19:33:55.982Z">
+<meta property="article:author" content="Orkhan Huseynli">
+<meta property="article:tag" content="orkhan huseyn, orkhan huseynli, javascript developer, front-end engineer, software developer, software engineer">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/sieve_animation.gif">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Prime Numbers &amp; Factorisation</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2021/07/22/frontend-engineer-roadmap/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&text=Prime Numbers &amp; Factorisation"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&title=Prime Numbers &amp; Factorisation"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&is_video=false&description=Prime Numbers &amp; Factorisation"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Prime Numbers &amp; Factorisation&body=Check out this article: http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&title=Prime Numbers &amp; Factorisation"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&title=Prime Numbers &amp; Factorisation"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&title=Prime Numbers &amp; Factorisation"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&title=Prime Numbers &amp; Factorisation"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&name=Prime Numbers &amp; Factorisation&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Primality-Test"><span class="toc-number">2.</span> <span class="toc-text">Primality Test</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Better-Primality-Check-Algorithm"><span class="toc-number">3.</span> <span class="toc-text">Better Primality Check Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Even-Better-Primality-Check-Algorithm"><span class="toc-number">4.</span> <span class="toc-text">Even Better Primality Check Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#A-Small-Task-for-You"><span class="toc-number">5.</span> <span class="toc-text">A Small Task for You</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prime-Factorization"><span class="toc-number">6.</span> <span class="toc-text">Prime Factorization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bruce-Force-Method"><span class="toc-number">6.1.</span> <span class="toc-text">Bruce Force Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Better-Approach"><span class="toc-number">6.2.</span> <span class="toc-text">Better Approach</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Prime Numbers &amp; Factorisation
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Orkhan Huseynli</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-05-11T19:09:37.000Z" itemprop="datePublished">2022-05-11</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Checking if a number is prime and finding prime factors of a number has plenty of applications in computer science. So you may face with these questions very often. Let’s look at what are different ways of finding prime numbers and prime factors of numbers.</p>
+<h2 id="Primality-Test"><a href="#Primality-Test" class="headerlink" title="Primality Test"></a>Primality Test</h2><p>Prime number is a number that has only two divisors: 1 and itself. For example, 2, 3, 7, 11 are prime numbers. So, how to check if a given number is prime or not? I know you already have a solution 😛 we can start from 1, go to N - 1 and check if number is divisible by any of this number. And you are correct, this is a solution:</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isPrime</span><span class="params">(<span class="type">unsigned</span> <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">2</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">if</span> (n % <span class="number">2</span> == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">3</span>; i &lt; n; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (n % i == <span class="number">0</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Great! We just found a way to check if a number is a prime or not. But is it efficient? Since, we’re checking all numbers till N - 1, time complexity of this algorithm will be <em>O(N)</em>. With a very big number, it will take a lot of time just to check it. Suppose that you want to find number of prime numbers between 1 and some arbitrary integer X, then we’ll have quadratic time algorithm 😕</p>
+<h2 id="Better-Primality-Check-Algorithm"><a href="#Better-Primality-Check-Algorithm" class="headerlink" title="Better Primality Check Algorithm"></a>Better Primality Check Algorithm</h2><p>The better primality check algorithm would be to go not from 1 to N, but go from 1 to square root of N. If you are better than me at math, then it is probably obvious to you. If it is not obvious, then let’s see why it is true.</p>
+<p>Suppose that number <code>N</code> is not a prime. Then it can be factored into two divisors like <code>N = A * B</code>. Now, both A and B cannot be greater than square root of N, because if they did, then <code>sqrt(N) * sqrt(N)</code> would be greater than N . So, at least one of the factors of N must be smaller than square root of N. If we can’t find any factor of N, which is smaller than square root of N, then N is a prime.</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">isPrime</span><span class="params">(<span class="type">unsigned</span> <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">1</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">if</span> (n == <span class="number">2</span>) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">  <span class="keyword">if</span> (n % <span class="number">2</span> == <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">3</span>; i &lt; <span class="built_in">floor</span>(<span class="built_in">sqrt</span>(n) + <span class="number">1</span>); i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (n % i == <span class="number">0</span>)</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>So, now running time of our function is <em>O(sqrt(N))</em> which is way better than our previous solution. You can try both of these functions with some very big integer and see the difference in performance.</p>
+<h2 id="Even-Better-Primality-Check-Algorithm"><a href="#Even-Better-Primality-Check-Algorithm" class="headerlink" title="Even Better Primality Check Algorithm"></a>Even Better Primality Check Algorithm</h2><p>Finding prime numbers are not always as trivial as we discussed before. What I mean is, often times you won’t be asked to check single number, you will rather be asked to collect some huge number of primes. For example, how many prime numbers are there between 1 and 10<sup>9</sup>? In this example we will need to iterate through each number from 1 to 10<sup>9</sup> and check its primality by using our isPrime function. And if we call this 109 - K, which might even be a bigger number, our time complexity will be <em>O(K sqrt(N))</em>. Can we do better? The answer is - yes.</p>
+<p>Another cool method of checking primality of numbers, is to collect prime numbers in a data structure like array or a hash table, so that primality test takes O(1) time. But we need to process the numbers first, so that later accesses can be constant time.</p>
+<p>The algorithm that we are going to use is called <strong>Sieve of Eratosthenes</strong>. The idea is to create a boolean array of N numbers and set all of them to true by default. So, for us, as a starting point every number is prime number. Then we take 2 and start marking all multiples of 2 false - to indicate that they are not prime (e.g. 4, 6, 8, 10, 12 … are not prime numbers). We do the same for 3, we start marking all multiples of 3 as non prime as well. Then we do the same for the rest of numbers which are prime. It’s better I show it:</p>
+<img src="./sieve_animation.gif" alt="Sieve of Eratosthenes animation"/>
+
+<p>Did you get the idea? Okay, I am assuming that you did 🚀 In the end all numbers in the array that has true value will be counted as prime number. And it will only take us O(1) time to access it. The only overhead here is to create this table which will take <em>O(N log(log N))</em> time and <em>O(N)</em> space.</p>
+<p>Here is the code:</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">sieveOfEratosthenes</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// an array of size n + 1 with value of &#x27;true&#x27;</span></span><br><span class="line">  <span class="function">vector&lt;<span class="type">bool</span>&gt; <span class="title">primes</span><span class="params">(n + <span class="number">1</span>, <span class="literal">true</span>)</span></span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 0 and 1 are not prime</span></span><br><span class="line">  primes[<span class="number">0</span>] = <span class="literal">false</span>;</span><br><span class="line">  primes[<span class="number">1</span>] = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="type">long</span> <span class="type">long</span> p = <span class="number">2</span>; p * p &lt;= n; p++) &#123;</span><br><span class="line">    <span class="comment">// if primes[i] is not changed, it is a prime</span></span><br><span class="line">    <span class="keyword">if</span> (primes[p] == <span class="literal">true</span>) &#123;</span><br><span class="line">      <span class="comment">// update all multiples of p</span></span><br><span class="line">      <span class="comment">// and mark them as not prime - &#x27;false&#x27;</span></span><br><span class="line">      <span class="keyword">for</span> (<span class="type">long</span> <span class="type">long</span> i = p * p; i &lt;= n; i += p) &#123;</span><br><span class="line">        primes[i] = <span class="literal">false</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> primes;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="A-Small-Task-for-You"><a href="#A-Small-Task-for-You" class="headerlink" title="A Small Task for You"></a>A Small Task for You</h2><p>A prime number p is called a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Safe_and_Sophie_Germain_primes">Sophie Germain number</a> if 2p+1 is also a prime number. Go ahead and find number of Sophie Germain numbers between 1 and 100000. The task is to do it using with all three methods of primality check that we discussed and see the performance for yourself. Good luck! 🤓</p>
+<h2 id="Prime-Factorization"><a href="#Prime-Factorization" class="headerlink" title="Prime Factorization"></a>Prime Factorization</h2><p>Prime factorization is a process of finding prime factors of a number. There are plenty of applications of this in computer science that are out of scope of this article, but if you are curious you can look at <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)">RSA encryption algorithm</a> and how it works.</p>
+<h3 id="Bruce-Force-Method"><a href="#Bruce-Force-Method" class="headerlink" title="Bruce Force Method"></a>Bruce Force Method</h3><p>Let’s take a number 30 as an example. 30 can be written as 2 _ 15. However, 15 is not a prime number so we need to reduce it to its factors as well. So, 30 = 2 _ 3 * 5. As you see 2, 3 and 5 are prime numbers. How to write a code that returns prime factors of a number?</p>
+<p>The brute force method is quite simple. Start from 2 and go to the number itself (let’s say N = 30, then i &lt;= 30) and while the number is divisible by the number i, divide it by i (N = N / i). It is better I show the code:</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">getPrimeFactors</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; prime_factors;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (n % i == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (n % i == <span class="number">0</span>) &#123;</span><br><span class="line">                n = n / i;</span><br><span class="line">                prime_factors.<span class="built_in">push_back</span>(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> prime_factors;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Go ahead and try it on your code editor and play with it. And let’s not forget about time complexity of this algorithm. It is <em>O(N)</em>.</p>
+<h3 id="Better-Approach"><a href="#Better-Approach" class="headerlink" title="Better Approach"></a>Better Approach</h3><p>Let’s try to find what’s bad about the brute force approach. Yeah, it is the name 😆</p>
+<p>No, seriously, let’s take number 99 as an example. 99 equals to 3 multiplied by 3 and 11 if we prime factorize it.</p>
+<p>But in our previous code we start from 2 and go all the way to N to check if it is divisible by the current number i. Let’s dry run our previous algorithm and see what it would do in this case:</p>
+<ol>
+<li>i = 2; N = 99; is 99 divisible by 2? No.</li>
+<li>i = 3; N = 99; is 99 divisible by 3? Yes. So, 3 is a prime factor and N = 99 / 3;</li>
+<li>i = 3; N = 33; is 33 divisible by 3? Yes. So, 3 is another prime factor and N = 33 / 3;</li>
+<li>i = 3; N = 11; is 11 divisible by 3? No.</li>
+<li>i = 4; N = 11; is 11 divisible by 4? No.</li>
+<li>i = 5; N = 11; is 11 divisible by 5? No.</li>
+<li>i = 6; N = 11; is 11 divisible by 6? No.</li>
+<li>i = 7; N = 11; is 11 divisible by 7? No.</li>
+<li>i = 8; N = 11; is 11 divisible by 8? No.</li>
+<li>i = 9; N = 11; is 11 divisible by 9? No.</li>
+<li>i = 10; N = 11; is 11 divisible by 10? No.</li>
+<li>i = 11; N = 11; is 11 divisible by 11? Yes. So, 11 is another prime factor and N = 11 / 11;</li>
+<li>i = 12; N = 11; we break the loop (i &lt;= N)</li>
+</ol>
+<p>As we see, even though 11 is already a prime number (which implies that it is a prime factor) we did all those necessary steps by checking if it is divisible by 3, 4, 5, 6 through 11. What if it wasn’t 11 but a very large prime number? We would again do all those steps.</p>
+<p>So our observation is that, once N is reduced to a prime number, the only factor of N will be N itself.</p>
+<p>As we’ve learnt earlier, if a number does not have any factors till its square root (sqrt(N)) then it is a prime number. So, in this algorithm the optimal solution is to go not from 2 to N, but from 2 to sqrt(N). And after our loop finishes, if N is 1 it means everything went well and we did not have any numbers such as 11. If it is not 1 then reduced N itself is also prime factor of our first N.</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">getPrimeFactors</span><span class="params">(<span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">    vector&lt;<span class="type">int</span>&gt; prime_factors;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">2</span>; i * i &lt;= n; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (n % i == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">while</span> (n % i == <span class="number">0</span>) &#123;</span><br><span class="line">                n = n / i;</span><br><span class="line">                prime_factors.<span class="built_in">push_back</span>(i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (n != <span class="number">1</span>) &#123;</span><br><span class="line">        prime_factors.<span class="built_in">push_back</span>(n);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> prime_factors;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>I suggest dry running this algorithm and previous algorithm by yourself and try to understand the reason why we did it. You can try N = 99 and check it on paper. And time complexity of this function will be <em>O(sqrt(N))</em>.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Primality-Test"><span class="toc-number">2.</span> <span class="toc-text">Primality Test</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Better-Primality-Check-Algorithm"><span class="toc-number">3.</span> <span class="toc-text">Better Primality Check Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Even-Better-Primality-Check-Algorithm"><span class="toc-number">4.</span> <span class="toc-text">Even Better Primality Check Algorithm</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#A-Small-Task-for-You"><span class="toc-number">5.</span> <span class="toc-text">A Small Task for You</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Prime-Factorization"><span class="toc-number">6.</span> <span class="toc-text">Prime Factorization</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Bruce-Force-Method"><span class="toc-number">6.1.</span> <span class="toc-text">Bruce Force Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Better-Approach"><span class="toc-number">6.2.</span> <span class="toc-text">Better Approach</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&text=Prime Numbers &amp; Factorisation"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&title=Prime Numbers &amp; Factorisation"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&is_video=false&description=Prime Numbers &amp; Factorisation"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Prime Numbers &amp; Factorisation&body=Check out this article: http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&title=Prime Numbers &amp; Factorisation"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&title=Prime Numbers &amp; Factorisation"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&title=Prime Numbers &amp; Factorisation"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&title=Prime Numbers &amp; Factorisation"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://orkhan-huseyn.github.io/2022/05/11/prime-numbers-and-factorisation/&name=Prime Numbers &amp; Factorisation&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2022 Orkhan Huseynli
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-151379834-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+</body>
+</html>

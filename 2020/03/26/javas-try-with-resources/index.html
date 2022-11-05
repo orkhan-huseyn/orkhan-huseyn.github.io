@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="IntroductionIf you’ve written some Java, you must be familiar with Java’s streams. These streams include InputStream and OutputStream for reading and writing binary data and Reader, Writer classes for">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java&#39;s try with resources">
+<meta property="og:url" content="http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/index.html">
+<meta property="og:site_name" content="Orkhan Huseynli">
+<meta property="og:description" content="IntroductionIf you’ve written some Java, you must be familiar with Java’s streams. These streams include InputStream and OutputStream for reading and writing binary data and Reader, Writer classes for">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-03-26T06:01:54.000Z">
+<meta property="article:modified_time" content="2022-11-05T19:05:41.335Z">
+<meta property="article:author" content="Orkhan Huseynli">
+<meta property="article:tag" content="orkhan huseyn, orkhan huseynli, javascript developer, front-end engineer, software developer, software engineer">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Java&#39;s try with resources</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+      
+<link rel="stylesheet" href="/css/rtl.css">
+
+    
+    <!-- rss -->
+    
+    
+<meta name="generator" content="Hexo 6.3.0"><!-- hexo-inject:begin --><!-- hexo-inject:end --></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2021/07/22/frontend-engineer-roadmap/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2020/01/26/how-to-convert-letter-to-upper-case/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&text=Java&#39;s try with resources"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&title=Java&#39;s try with resources"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&is_video=false&description=Java&#39;s try with resources"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java&#39;s try with resources&body=Check out this article: http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&title=Java&#39;s try with resources"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&title=Java&#39;s try with resources"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&title=Java&#39;s try with resources"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&title=Java&#39;s try with resources"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&name=Java&#39;s try with resources&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Managing-streams"><span class="toc-number">2.</span> <span class="toc-text">Managing streams</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-AutoClosable-interface"><span class="toc-number">3.</span> <span class="toc-text">The AutoClosable interface</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">4.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Java&#39;s try with resources
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Orkhan Huseynli</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2020-03-26T06:01:54.000Z" itemprop="datePublished">2020-03-26</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>If you’ve written some Java, you must be familiar with Java’s streams. These streams include <code>InputStream</code> and <code>OutputStream</code> for reading and writing binary data and <code>Reader</code>, <code>Writer</code> classes for reading and writing character streams. We will look at the main points of Java streams, which are handling exceptions and closing them.</p>
+<h2 id="Managing-streams"><a href="#Managing-streams" class="headerlink" title="Managing streams"></a>Managing streams</h2><p>The streams mentioned above are likely to fail and when they to they throw an <code>IOException</code>. So, a sample code for reading from readable stream would be like this:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> <span class="comment">// some input stream</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="type">int</span> intVal;</span><br><span class="line">    <span class="keyword">while</span> ((intVal = inputStream.read()) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="type">byte</span> <span class="variable">byteVal</span> <span class="operator">=</span> (<span class="type">byte</span>) intVal;</span><br><span class="line">        <span class="comment">// do something with the byte data</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    System.out.println(e.getMessage());</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>All readable streams include <code>int read()</code> and <code>int read(byte[] buff)</code> methods. As the name suggests they help us to read from the stream and return bytes that are read from. If returned values is less than 0 (zero) then the stream is ended. Since the <code>InputStream</code> is for reading binary data, we also cast the integer value to <code>byte</code>.</p>
+<p>Now, the above code is somehow complete, but ignores an important point: the stream is not closed after reading from it. We can close it in try-catch’s <code>finally</code> block. However, since the closing the stream also contains some checking and may throw an <code>IOException</code>, the code will look something like this:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> <span class="comment">// some input stream</span></span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="type">int</span> intVal;</span><br><span class="line">    <span class="keyword">while</span> ((intVal = inputStream.read()) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="type">byte</span> <span class="variable">byteVal</span> <span class="operator">=</span> (<span class="type">byte</span>) intVal;</span><br><span class="line">        <span class="comment">// do something with the byte data</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    System.out.println(e.getMessage());</span><br><span class="line">&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="comment">// closing stream may throw an IOException</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// we need to null check</span></span><br><span class="line">        <span class="comment">// before closing the stream</span></span><br><span class="line">        <span class="keyword">if</span> (inputStream != <span class="literal">null</span>)</span><br><span class="line">            inputStream.close();</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        System.out.println(e.getMessage());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This is a lot of code, isn’t it? :) To simplify such scenarios we use Java’s try with resources.</p>
+<h2 id="The-AutoClosable-interface"><a href="#The-AutoClosable-interface" class="headerlink" title="The AutoClosable interface"></a>The AutoClosable interface</h2><p>The reason why streams expose a <code>void close() throws IOException</code> method, because they implement an interface called <code>Closable</code> interface. <code>Closable</code> interface extends an interface named <code>AutoClosable</code> interface which gives them <code>void close() throws Exception</code> method and makes them close automatically when used inside a try-with resorces block. Now, what’s try-with resources? I believe, you may have seen them. We can modify the above code like so:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// resource is automatically closed because</span></span><br><span class="line"><span class="comment">// it implements AutoClosable interface</span></span><br><span class="line"><span class="keyword">try</span> (<span class="type">InputStream</span> <span class="variable">inputStream</span> <span class="operator">=</span> <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="type">int</span> intVal;</span><br><span class="line">    <span class="keyword">while</span> ((intVal = inputStream.read()) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="type">byte</span> <span class="variable">byteVal</span> <span class="operator">=</span> (<span class="type">byte</span>) intVal;</span><br><span class="line">        <span class="comment">// do something with the byte data</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    System.out.println(e.getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The parentheses after <code>try</code> contains a resource and the resource is being closed automatically after the code block finishes executing. The good news is you don’t have to write that messy code we write earlier.</p>
+<p>To prove that the resource is always being closed, let’s do some little experiment. Let’s create out own class that implements <code>AutoClosable</code> interface and use it inside a try-with resources block.</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">ExampleStream</span> <span class="keyword">implements</span> <span class="title class_">AutoCloseable</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">doSomething</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;I am doing something...&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">close</span><span class="params">()</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;I am being closed.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>This is our AutoClosable, let’s use it:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> (<span class="type">ExampleStream</span> <span class="variable">exampleStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ExampleStream</span>()) &#123;</span><br><span class="line">    exampleStream.doSomething();</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">    System.out.println(e.getMessage());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>If you run this example on your own, you will see it printing <code>I am doing something...</code> and then <code>I am being closed.</code> like so. This proves that try-with resources calls <code>void close() throws Exception</code> method of the resource. There are lots of real life use cases but to show one, let’s read a file using <code>BufferedReader</code> class:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">try</span> (<span class="type">BufferedReader</span> <span class="variable">reader</span> <span class="operator">=</span> Files.newBufferedReader(Paths.get(<span class="string">&quot;data.txt&quot;</span>))) &#123;</span><br><span class="line">    <span class="type">int</span> intVal;</span><br><span class="line">    <span class="keyword">while</span> ((intVal = reader.read()) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="type">char</span> <span class="variable">ch</span> <span class="operator">=</span> (<span class="type">char</span>) intVal;</span><br><span class="line">        System.out.print(ch);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>BufferedReader</code> extends abstract <code>Reader</code> class, which implements <code>Closable</code> (remember: <code>Closable</code> interface extends <code>AutoClosable</code> interface). So, the read stream is being closed after the code finishes executing :)</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Thanks for reading!</p>
+<p>If you find any mistakes in any of my articles, please do not hesitate to fix them and send me a PR.</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/orkhan-huseyn/my-blog">https://github.com/orkhan-huseyn/my-blog</a></p>
+<p>This article contains some concepts discussed in <a target="_blank" rel="noopener" href="https://app.pluralsight.com/library/courses/java-fundamentals-core-platform/table-of-contents">Java Fundamentals: The Core Platform</a> course in Pluralsight.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Managing-streams"><span class="toc-number">2.</span> <span class="toc-text">Managing streams</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-AutoClosable-interface"><span class="toc-number">3.</span> <span class="toc-text">The AutoClosable interface</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">4.</span> <span class="toc-text">Conclusion</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&text=Java&#39;s try with resources"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&title=Java&#39;s try with resources"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&is_video=false&description=Java&#39;s try with resources"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java&#39;s try with resources&body=Check out this article: http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&title=Java&#39;s try with resources"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&title=Java&#39;s try with resources"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&title=Java&#39;s try with resources"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&title=Java&#39;s try with resources"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://orkhan-huseyn.github.io/2020/03/26/javas-try-with-resources/&name=Java&#39;s try with resources&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2022 Orkhan Huseynli
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+
+    <!-- jquery -->
+
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+
+<!-- clipboard -->
+
+  
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight .code pre").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      target: function(trigger) {
+        return trigger.nextElementSibling;
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+    <script type="text/javascript">
+        (function(i,s,o,g,r,a,m) {i['GoogleAnalyticsObject']=r;i[r]=i[r]||function() {
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-151379834-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+</body>
+</html>
